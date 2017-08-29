@@ -8,17 +8,20 @@ import br.com.caelum.agiletickets.models.TipoDeEspetaculo;
 public class CalculadoraDePrecos {
 
 	public static BigDecimal calcula(Sessao sessao, Integer quantidade) {
-		BigDecimal preco;
-		preco = sessao.getPreco();
+		BigDecimal preco = sessao.getPreco();
+		TipoDeEspetaculo tipoDeEspetaculo = sessao.getEspetaculo().getTipo();
+		Integer totalIngressos = sessao.getTotalIngressos();
+		int ingressosReservados = sessao.getIngressosReservados();
+		int ingressosDisponiveis = totalIngressos - ingressosReservados;
 		
-		if(sessao.getEspetaculo().getTipo().equals(TipoDeEspetaculo.CINEMA) || sessao.getEspetaculo().getTipo().equals(TipoDeEspetaculo.SHOW)) {
+		if(tipoDeEspetaculo.equals(TipoDeEspetaculo.CINEMA) || tipoDeEspetaculo.equals(TipoDeEspetaculo.SHOW)) {
 
-			if((sessao.getTotalIngressos() - sessao.getIngressosReservados()) / sessao.getTotalIngressos().doubleValue() <= 0.05) { 
-				preco = sessao.getPreco().add(sessao.getPreco().multiply(BigDecimal.valueOf(0.10)));
+			if(ingressosDisponiveis / totalIngressos.doubleValue() <= 0.05) { 
+				preco = preco.add(preco.multiply(BigDecimal.valueOf(0.10)));
 			}
-		} else if(sessao.getEspetaculo().getTipo().equals(TipoDeEspetaculo.BALLET) || sessao.getEspetaculo().getTipo().equals(TipoDeEspetaculo.ORQUESTRA)) {
-			if((sessao.getTotalIngressos() - sessao.getIngressosReservados()) / sessao.getTotalIngressos().doubleValue() <= 0.50) { 
-				preco = sessao.getPreco().add(sessao.getPreco().multiply(BigDecimal.valueOf(0.20)));
+		} else if(tipoDeEspetaculo.equals(TipoDeEspetaculo.BALLET) || tipoDeEspetaculo.equals(TipoDeEspetaculo.ORQUESTRA)) {
+			if(ingressosDisponiveis / totalIngressos.doubleValue() <= 0.50) { 
+				preco = preco.add(preco.multiply(BigDecimal.valueOf(0.20)));
 			}
 			
 			if(sessao.getDuracaoEmMinutos() > 60){
