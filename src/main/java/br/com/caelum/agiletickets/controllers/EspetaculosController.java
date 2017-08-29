@@ -84,7 +84,7 @@ public class EspetaculosController {
 	}
 
 	@Post("/espetaculo/{espetaculoId}/sessoes")
-	public void cadastraSessoes(Long espetaculoId, LocalDate inicio, LocalDate fim, LocalTime horario, Periodicidade periodicidade) {
+	public void cadastraSessoes(Long espetaculoId, LocalDate inicio, LocalDate fim, LocalTime horario, Periodicidade periodicidade) throws Exception {
 		Espetaculo espetaculo = carregaEspetaculo(espetaculoId);
 
 		// aqui faz a magica!

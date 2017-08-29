@@ -34,6 +34,14 @@ public class Sessao {
 
 	private BigDecimal preco;
 
+	public Sessao() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	public Sessao (DateTime inicio) {
+		this.inicio = inicio;		
+	}
+	
 	public Long getId() {
 		return id;
 	}
@@ -91,7 +99,6 @@ public class Sessao {
 		return totalIngressos - ingressosReservados;
 	}
 	
-
 	public void reserva(Integer numeroDeIngressos) {
 		// soma quantidade na variavel ingressos reservados
 		this.ingressosReservados += numeroDeIngressos;
@@ -99,7 +106,7 @@ public class Sessao {
 
 	public boolean podeReservar(Integer numeroDeIngressos) {
 		int sobraram = getIngressosDisponiveis() - numeroDeIngressos;
-        boolean naoTemEspaco = sobraram < 0;
+        boolean naoTemEspaco = sobraram <= 0;
 
         return !naoTemEspaco;
 	}
