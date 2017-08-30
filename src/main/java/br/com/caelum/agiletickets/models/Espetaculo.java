@@ -16,6 +16,7 @@ import javax.persistence.OneToMany;
 import org.joda.time.Days;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
+import org.joda.time.Weeks;
 
 @Entity
 public class Espetaculo {
@@ -97,17 +98,24 @@ public class Espetaculo {
      * 
      * Repare que a data da primeira sessao é sempre a data inicial.
      */
-	public List<Sessao> criaSessoes(LocalDate inicio, LocalDate fim, LocalTime horario, Periodicidade periodicidade) throws Exception {
+	public List<Sessao> criaSessoes(LocalDate inicio, LocalDate fim, LocalTime horario, Periodicidade periodicidade) {
 
 		if (inicio == fim) {
 			sessoes.add(new Sessao(inicio.toDateTime(horario)));
 		} else if (fim.isAfter(inicio)) {
 			int qtdDias = Days.daysBetween(inicio, fim).getDays();
+			if (periodicidade.equals(Periodicidade.DIARIA)){
 			for (int i = 0; i < qtdDias+1; i++) {
 				sessoes.add(new Sessao(inicio.toDateTime(horario)));
 			}
+			} else {
+				int qtdSemanas = Weeks.weeksBetween(inicio, fim).getWeeks();
+				for (int i = 0; i < qtdSemanas; i++) {
+					sessoes.add(new Sessao(inicio.toDateTime(horario)));
+				}				
+			}
 		} else {
-			new Exception("Informe um período válido");
+			throw new IllegalArgumentException("Informe um período válido");
 			
 		}
 		return sessoes;

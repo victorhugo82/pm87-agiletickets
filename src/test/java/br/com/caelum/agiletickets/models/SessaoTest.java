@@ -1,13 +1,7 @@
 package br.com.caelum.agiletickets.models;
 
-import java.util.List;
-
-import org.joda.time.LocalDate;
-import org.joda.time.LocalTime;
 import org.junit.Assert;
 import org.junit.Test;
-
-import br.com.caelum.agiletickets.controllers.EspetaculosController;
 
 public class SessaoTest {
 

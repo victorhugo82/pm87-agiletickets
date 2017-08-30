@@ -112,9 +112,18 @@ public class EspetaculoTest {
 		LocalDate dia = new LocalDate();
 		LocalTime hora = new LocalTime();
 		Espetaculo espetaculo = new Espetaculo();
-		List<Sessao> sessoes = espetaculo.criaSessoes(dia, dia.plusDays(10), hora, Periodicidade.SEMANAL);
+		List<Sessao> sessoes = espetaculo.criaSessoes(dia, dia.plusDays(25), hora, Periodicidade.SEMANAL);
 
-		Assert.assertEquals(2,sessoes.size());
+		Assert.assertEquals(3,sessoes.size());
+	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void testeException() throws Exception {
+		LocalDate dia = new LocalDate();
+		LocalTime hora = new LocalTime();
+		Espetaculo espetaculo = new Espetaculo();
+		espetaculo.criaSessoes(dia.plusDays(1), dia , hora, Periodicidade.DIARIA);
+
 	}
 	
 	
